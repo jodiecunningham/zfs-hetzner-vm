@@ -495,7 +495,7 @@ for kver in $(find /lib/modules/* -maxdepth 0 -type d | grep -v "$(uname -r)" | 
 done
 
 echo "======= installing zfs on rescue system =========="
-
+  echo "libc6 libraries/restart-without-asking boolean true"    | debconf-set-selections
   echo "zfs-dkms zfs-dkms/note-incompatible-licenses note true" | debconf-set-selections  
 #  echo "y" | zfs
 # linux-headers-generic linux-image-generic
@@ -665,6 +665,7 @@ sed -i 's/# de_AT.UTF-8/de_AT.UTF-8/' "$c_zfs_mount_dir/etc/locale.gen"
 sed -i 's/# de_DE.UTF-8/de_DE.UTF-8/' "$c_zfs_mount_dir/etc/locale.gen"
 
 chroot_execute 'cat <<CONF | debconf-set-selections
+libc6 libraries/restart-without-asking boolean true
 locales locales/default_environment_locale      select  en_US.UTF-8
 keyboard-configuration  keyboard-configuration/store_defaults_in_debconf_db     boolean true
 keyboard-configuration  keyboard-configuration/variant  select  German
